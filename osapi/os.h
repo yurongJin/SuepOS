@@ -18,11 +18,6 @@ typedef int8 error;
 #define $c (char *)
 #define $i (int)
 
-#define ErrNoErr 0
-#define ErrInit 1
-#define ErrIO 4
-#define ErrBadFD 8
-
 #define packed __attribute__((packed))
 #define public __attribute__((visibility("default")))
 #define internal __attribute__((visibility("hidden")))
@@ -43,6 +38,13 @@ typedef int8 error;
     extern public bool initialized;
     extern public error errnumber; 
 #endif
+
+public packed enum {
+    ErrNoErr,
+    ErrInit,
+    ErrIO,
+    ErrBadFD
+};
 
 /*write one char */
 public bool load(fd,int8);
