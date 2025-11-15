@@ -9,6 +9,8 @@
 #define PtrPerInode     (8)
 #define PtrPerBlock     (256)
 
+typedef int16 ptr;
+
 internal packed struct s_superblock {
     int8 bootsector[500];
     int16 _;
@@ -28,3 +30,30 @@ internal packed struct s_filesystem {
     superblock matadata;
 };
 typedef struct s_filesystem filesystem;
+
+internal packed struct s_filename{
+    int8 name[8];
+    int8 ext[3];
+};
+typedef struct s_filename filename;
+
+internal packed struct s_inode {
+    packed struct{
+        int8 _:4;
+        int8 type:3;
+        bool valid:1;
+    }validtype;
+    int16 size;
+    filename name;
+    ptr indirect;
+    ptr indirect[PtrPerInode];
+};
+typedef struct s_inode inode;
+
+internal packed union u_fsblock {
+    superblock super;
+    int8 data[Blocksize];
+    ptr pointers[PtrPerBlock];
+    inode inodes[Inodesperblock];
+};
+typedef union u_fsblock fsblock;
