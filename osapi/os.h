@@ -27,7 +27,7 @@ typedef int8 error;
     errnumber = (x);\
     return 0;\              
 }while(false)
-#define alloc(x) malloc(x)
+#define alloc(x) malloc($i x)
 #define destroy(x) free(x)
 
 
@@ -43,7 +43,10 @@ public packed enum {
     ErrNoErr,
     ErrInit,
     ErrIO,
-    ErrBadFD
+    ErrBadFD,
+    ErrNotAttached,
+    ErrNoMem,
+    ErrBusy
 };
 
 /*write one char */

@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "disk.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "osapi.h": "c",
+        "os.h": "c",
+        "fs.h": "c"
     }
 }

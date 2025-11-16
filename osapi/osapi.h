@@ -5,6 +5,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include"disk.h"
+
 
 #define getposixfd(x) fds[(x)]
 #define assert_initialized() if(!initialized) reterr(ErrInit)
@@ -16,6 +18,3 @@ private int16 stringlen(int8*);
 #endif 
 
 internal int8 *strnum(int8*,int8);
-internal void zero(int8*,int16);
-internal void copy(int8*,int8*,int16);
-

@@ -1,6 +1,5 @@
 #pragma once
 #include <stdio.h>
-#include "os.h"
 #include "osapi.h"
 
 #define DriveC     0x01    /*0001*/
@@ -21,6 +20,8 @@ typedef struct s_disk disk;
 internal disk *dattath(int8);
 internal void ddetach(disk*);
 internal void dshow(disk*);
+internal int16 openfiles(disk *);
+internal void closeallfiles(disk *);
 
 /*
     bool dread(disk *dd,block *addr,int16 blockno);

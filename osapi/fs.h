@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "osapi.h"
 #include "disk.h"
+#include "omnistd.h"
 
 #define Magic1          (0xdd05)
 #define Magic2          (0xaa55)
@@ -10,9 +11,18 @@
 #define PtrPerBlock     (256)
 
 typedef int16 ptr;
+typedef int8 bootsector[500];
+typedef bool bitmap;
+
+internal packed enum{
+    TypeNotValid = 0x00,
+    TypeFile = 0x01,
+    TypeDir = 0x03
+};
+
 
 internal packed struct s_superblock {
-    int8 bootsector[500];
+    bootsector boot;
     int16 _;
     int16 blocks;
     int16 inodeblocks;
@@ -27,7 +37,7 @@ internal packed struct s_filesystem {
     int8 drive;
     disk *dd;
     bool *bitmap;
-    superblock matadata;
+    superblock metadata;
 };
 typedef struct s_filesystem filesystem;
 
@@ -38,15 +48,11 @@ internal packed struct s_filename{
 typedef struct s_filename filename;
 
 internal packed struct s_inode {
-    packed struct{
-        int8 _:4;
-        int8 type:3;
-        bool valid:1;
-    }validtype;
+    int8 validtype;
     int16 size;
     filename name;
     ptr indirect;
-    ptr indirect[PtrPerInode];
+    ptr direct[PtrPerInode];
 };
 typedef struct s_inode inode;
 
@@ -57,3 +63,8 @@ internal packed union u_fsblock {
     inode inodes[Inodesperblock];
 };
 typedef union u_fsblock fsblock;
+
+internal filesystem *fsformat(disk*,bootsector*,bool);
+internal bool *mkbitmat(filesystem*,bool);
+internal int16 bitmapalloc(filesystem*,bitmap*);
+internal void bitmapfree(filesystem*,bitmap*,int16);
