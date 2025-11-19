@@ -30,7 +30,6 @@ internal packed struct s_superblock {
     int16 magic1;
     int16 magic2;
 };
-
 typedef struct s_superblock superblock;
 
 internal packed struct s_filesystem {
@@ -48,7 +47,7 @@ internal packed struct s_filename{
 typedef struct s_filename filename;
 
 internal packed struct s_inode {
-    int8 validtype;
+    int8 validtype;  /*TypeNotValid,TypeFile,TypeDir*/
     int16 size;
     filename name;
     ptr indirect;
@@ -64,7 +63,7 @@ internal packed union u_fsblock {
 };
 typedef union u_fsblock fsblock;
 
-internal filesystem *fsformat(disk*,bootsector*,bool);
+public filesystem *fsformat(disk*,bootsector*,bool);
 internal bool *mkbitmat(filesystem*,bool);
 internal int16 bitmapalloc(filesystem*,bitmap*);
 internal void bitmapfree(filesystem*,bitmap*,int16);

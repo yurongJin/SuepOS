@@ -75,7 +75,7 @@ internal void bitmapfree(filesystem *fs,bitmap* bm,int16 bl){
     return;
 }
 
-internal filesystem *fsformat(disk *dd,bootsector *mbr,bool force){ /*mbr:master boot record*/
+public filesystem *fsformat(disk *dd,bootsector *mbr,bool force){ /*mbr:master boot record*/
     filesystem *fs;
     int16 size;
     int16 inodeblocks;
@@ -86,7 +86,7 @@ internal filesystem *fsformat(disk *dd,bootsector *mbr,bool force){ /*mbr:master
     bool ok;
     int16 n;
     fsblock fsb;
-    bitmap *bm;
+    //bitmap *bm;
 
     if(!dd){
         reterr(ErrNotAttached);
@@ -158,7 +158,7 @@ internal filesystem *fsformat(disk *dd,bootsector *mbr,bool force){ /*mbr:master
     fs->dd = dd;
     copy($1 &fs->metadata,$1 &super,Blocksize);
     
-    
+    /*
     bm = mkbitmap(fs,false);
     size = 
           1//superblock
@@ -170,8 +170,8 @@ internal filesystem *fsformat(disk *dd,bootsector *mbr,bool force){ /*mbr:master
     }
 
     fs->bitmap = bm;
-    
-
+    */
+   fs->bitmap = 0;
     return fs;
 
 }

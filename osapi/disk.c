@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-
+disk *DiskDescriptor[2];
 internal int8 attached;
 
 internal void dshow(disk *dd){
@@ -83,23 +83,22 @@ internal disk *dattach(int8 drive){
 }
 
 public void dinit(){
-    disk *dd[2];
     block bl={0};
     bool x;
 
     attached=0;
-    *dd = dattach(1);
-    *(dd+1) = dattach(2);
+    *DiskDescriptor = dattach(1);
+    *(DiskDescriptor+1) = dattach(2);
 
-    dshow(*dd);
-    dshow(dd[1]);
+    // dshow(*DiskDescriptor);
+    // dshow(DiskDescriptor[1]);
 
-    x = dread(*dd,&bl,2);
-    printf("x = %s\n",(x)?"true":"false");
-    printf("0x%.02hhx\n",(char)bl[500]);
+    // x = dread(*DiskDescriptor,&bl,2);
+    // printf("x = %s\n",(x)?"true":"false");
+    // printf("0x%.02hhx\n",(char)bl[500]);
 
-    ddetach(*dd);
-    ddetach(dd[1]);
+    // ddetach(*DiskDescriptor);
+    // ddetach(DiskDescriptor[1]);
 
     return;
 }

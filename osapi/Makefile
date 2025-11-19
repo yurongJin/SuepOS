@@ -4,7 +4,7 @@ ldflags=
 
 .PHONY: clean
 
-all: clean osapi.so
+all: clean osapi.so diskutil
 
 osapi.so : osapi.o disk.o omnistd.o fs.o
 	cc $(flags) $(soflags) $^ -o $@
@@ -19,6 +19,13 @@ omnistd.o : omnistd.c omnistd.h
 	cc $(flags) -c $<
 
 fs.o : fs.c fs.h
+	cc $(flags) -c $<
+
+diskutil : diskutil.o osapi.o disk.o omnistd.o fs.o
+	cc $(flags) $^ -o $@
+	mv -f diskutil ../util
+
+diskutil.o : diskutil.c
 	cc $(flags) -c $<
 
 clean:
